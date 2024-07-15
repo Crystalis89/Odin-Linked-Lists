@@ -114,27 +114,46 @@ class LinkedList {
     // size returns the total number of nodes in the list
     //interate through til hit next: null and return the number
     size(list) {
+        // let i = 0;
+        // let listdepth = list
+
+        // while (listdepth !== null && i < 10000) {
+        //     i++;
+        //     listdepth = listdepth.next;
+           
+        //     if (listdepth.next === null) {
+        //         return i                    
+        //     } 
+        // }
+        if (list.head === null)
+            return list
+    }
+
+
+       // head returns the first node in the list
+    //add head: null and remove it from the current holder
+    headNode(list) {
+    
+        if (list.head === null)
+            return list
+        }   
+  
+
+    // tail returns the last node in the list
+    //go til reach next = null and replace next = null with the list entry
+    tailNode(list) {
         let i = 0;
         let listdepth = list
 
-        while (listdepth !== null && i < 10000) {
+        while (listdepth !== null || i < 10000) {
             i++;
             listdepth = listdepth.next;
            
             if (listdepth.next === null) {
-                return i                    
+                return listdepth                                   
             } 
         }
-
     }
-    
-    // head returns the first node in the list
-    //add head: null and remove it from the current holder
-    head(list, newnode) {}
-
-    // tail returns the last node in the list
-    //go til reach next = null and replace next = null with the list entry
-    tail(list, newnode) {}
 
     // at(index) returns the node at the given index
     //add number of .next to match the index and return the contents there.
@@ -162,7 +181,24 @@ class LinkedList {
 
     // toString represents your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
     //depending on if it is an entry in the list or the whole list either loop through converting the data contents of whole thing to text or just the single entry.
-    toString() {}
+    toString(list) {
+        let nodestring = 'The data contents of the linked list are as follows:'
+        let i = 0
+        let listdepth = list.next
+   
+
+        while (listdepth !== null || i < 10000) {
+            i++;
+            nodestring += ` ${listdepth.data},`
+            listdepth = listdepth.next
+           
+            if (listdepth.next === null) {
+                nodestring += ` ${listdepth.data},`
+                return nodestring                                   
+            } 
+        }
+
+    }
 
     // insertAt(value, index) that inserts a new node with the provided value at the given index.
     //Add however many .next it takes to reach the index value then change the target's next to null.
@@ -181,7 +217,7 @@ class LinkedList {
 
 
 //list creation testing and function testing
-let head = LinkedList.createHead()
+let headnode = LinkedList.createHead()
 // let createnode1 = LinkedList.createListNode('test')
 // let createnode2 = LinkedList.createListNode('test2')
 // let createnode3 = LinkedList.createListNode('test3')
@@ -190,9 +226,9 @@ let head = LinkedList.createHead()
 // let createnode6 = LinkedList.createListNode('test6')
 
 
-head.append(head, '1 append test')
-head.append(head, '2 appened test')
-head.append(head, '3 append test')
-head.prepend(head, '1 prepend test')
+headnode.append(headnode, '1 append test')
+headnode.append(headnode, '2 appened test')
+headnode.append(headnode, '3 append test')
+headnode.prepend(headnode, '1 prepend test')
 // head.append(head, createnode5)
 // head.append(head, createnode6)
