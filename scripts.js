@@ -4,31 +4,41 @@
 // Node class / factory, containing a value property and a link to the nextNode, set both as null by default.
 // Build the following functions in your linked list class / factory:
 
-function listvisualizer(list, nodes) {
+//Maybe add a few buttons or a number input for it to create as many nodes as selected.
+function listVisualizer(list, nodecount) {
     let listelement = document.querySelector('#list')
     let listdepth = list
     let i = 0
 
-    while (listelement.firstChild && i < 100) {
+        while (listelement.firstChild && i < 100) {
                 i++
                 listelement.removeChild(listelement.lastChild)           
             }
-            
-    for (let i = 0; i < nodes; i++) {     
 
-        listdepth = listdepth.next
+    while (listdepth.next !== null) {
+
+        let listentry = document.createElement('li')
+        if (listdepth.head === null && listdepth.next !== null) {
+            listentry.textContent = `Head of List the Next node contains: "${listdepth.next.data}"`
+
+        }
+        else {
+          if (listdepth.next !== null) {
+                    listentry.textContent = `List entry containing "${listdepth.data}" Next node contains ${listdepth.next.data}`
+                } 
+                
+             }
+                 listelement.appendChild(listentry)
+                 listdepth = listdepth.next
+    }
+
+    if (listdepth.next === null) {
         let listentry = document.createElement('li')
 
-        if (listdepth.next !== null) {
-            listentry.textContent = `List entry ${listdepth.data}'s Next node is ${listdepth.next.data}`
-        } else (
-            listentry.textContent = `List entry ${listdepth.data} is the end of the list`
-
-        )
-          listelement.appendChild(listentry)
-    
-        }
-    
+        listentry.textContent = `List entry containing "${listdepth.data}" is the end of the list`
+        listelement.appendChild(listentry)
+    }
+       
 }
 
 
@@ -55,24 +65,26 @@ class LinkedList {
 
 // append(value) adds a new node containing value to the end of the list
 //Maybe add way to submit an array of list node entries for it to iterate through and add them all instead of calling the function multiple times
-    append(list, appendWith) {
+    append(list, value) {
+        let createnode = LinkedList.createListNode(value)
+
                   
         if (list.head === null) {
             let listdepth = list   
         
             if (listdepth.head === null && listdepth.next === null) { 
-                listdepth.next = appendWith
+                listdepth.next = createnode
 
             } else {
                 let i = 0;
 
-                while (listdepth !== null || i < 1000) {
+                while (listdepth !== null || i < 10000) {
                     i++;
                     listdepth = listdepth.next;
                    
                     if (listdepth.next === null) {
-                        listdepth.next = appendWith
-                        listvisualizer(list, i)
+                        listdepth.next = createnode
+                        listVisualizer(list)
                         return                    
                     } 
 
@@ -85,7 +97,19 @@ class LinkedList {
     }
 
     // prepend(value) adds a new node containing value to the start of the list
-    prepend() {}
+    prepend(list, value) {
+
+        if (typeof(list) === 'object' && list.head === null) {
+            let createnode = LinkedList.createListNode(value)
+            createnode.next = list.next
+            list.next = createnode
+            listVisualizer(list)
+        } else {
+            alert('Invalid object, please input a Linked List Head node.')
+        }
+   
+
+    }
 
     // size returns the total number of nodes in the list
     //interate through til hit next: null and return the number
@@ -93,7 +117,7 @@ class LinkedList {
         let i = 0;
         let listdepth = list
 
-        while (listdepth !== null && i < 1000) {
+        while (listdepth !== null && i < 10000) {
             i++;
             listdepth = listdepth.next;
            
@@ -158,17 +182,17 @@ class LinkedList {
 
 //list creation testing and function testing
 let head = LinkedList.createHead()
-let createnode1 = LinkedList.createListNode('test')
-let createnode2 = LinkedList.createListNode('test2')
-let createnode3 = LinkedList.createListNode('test3')
-let createnode4 = LinkedList.createListNode('test4')
-let createnode5 = LinkedList.createListNode('test5')
-let createnode6 = LinkedList.createListNode('test6')
+// let createnode1 = LinkedList.createListNode('test')
+// let createnode2 = LinkedList.createListNode('test2')
+// let createnode3 = LinkedList.createListNode('test3')
+// let createnode4 = LinkedList.createListNode('test4')
+// let createnode5 = LinkedList.createListNode('test5')
+// let createnode6 = LinkedList.createListNode('test6')
 
 
-head.append(head, createnode1)
-head.append(head, createnode2)
-head.append(head, createnode3)
-head.append(head, createnode4)
-head.append(head, createnode5)
-head.append(head, createnode6)
+head.append(head, '1 append test')
+head.append(head, '2 appened test')
+head.append(head, '3 append test')
+head.prepend(head, '1 prepend test')
+// head.append(head, createnode5)
+// head.append(head, createnode6)
