@@ -4,8 +4,15 @@
 // Node class / factory, containing a value property and a link to the nextNode, set both as null by default.
 // Build the following functions in your linked list class / factory:
 
+
+
+
+//Once get the last two functions implemented go and make sure everything has a proper input checker.
+
+
+
 //Maybe add a few buttons or a number input for it to create as many nodes as selected.
-function listVisualizer(list, nodecount) {
+function listVisualizer(list) {
     let listelement = document.querySelector('#list')
     let listdepth = list
     let i = 0
@@ -112,26 +119,24 @@ class LinkedList {
     }
 
     // size returns the total number of nodes in the list
-    //interate through til hit next: null and return the number
     size(list) {
-        // let i = 0;
-        // let listdepth = list
+        let i = 0;
+        let listdepth = list
 
-        // while (listdepth !== null && i < 10000) {
-        //     i++;
-        //     listdepth = listdepth.next;
+        while (listdepth !== null && i < 10000) {
+            i++;
+            listdepth = listdepth.next;
            
-        //     if (listdepth.next === null) {
-        //         return i                    
-        //     } 
-        // }
+            if (listdepth.next === null) {
+                return i                    
+            } 
+        }
         if (list.head === null)
-            return list
+            return i
     }
 
 
        // head returns the first node in the list
-    //add head: null and remove it from the current holder
     headNode(list) {
     
         if (list.head === null)
@@ -140,7 +145,6 @@ class LinkedList {
   
 
     // tail returns the last node in the list
-    //go til reach next = null and replace next = null with the list entry
     tailNode(list) {
         let i = 0;
         let listdepth = list
@@ -156,7 +160,6 @@ class LinkedList {
     }
 
     // at(index) returns the node at the given index
-    //add number of .next to match the index and return the contents there.
     at(list, index){
         let listdepth = list
         for (let i = 0; i < index; i++) {
@@ -168,19 +171,75 @@ class LinkedList {
 
     }
 
-    // pop removes the last element from the list
-    //Same as at just saving the list entry and updating the next values of the parent.
-    pop() {}
+    // pop removes the last element from the list and returns it to a provided array.
+    pop(list, newvar) {
+
+        if (Array.isArray(newvar) === false) {
+            return alert('Please provide an array for the second parameter')
+        }
+
+        let i = 0
+        let listdepth = list
+          
+        while (listdepth.next !== null || i < 10000) {
+
+            i++;
+ 
+            if (listdepth.next.next === null) {
+            
+                newvar.push(listdepth.next)
+                listdepth.next = null
+                listVisualizer(list)
+                return 
+                
+            }
+            listdepth = listdepth.next
+
+        }
+
+    }
 
     // contains(value) returns true if the passed in value is in the list and otherwise returns false.
-    contains(list, value){}
+    contains(list, value){
+
+        let i = 0
+        let listdepth = list
+   
+
+        while (listdepth.next !== null || i < 10000) {
+            i++;
+            listdepth = listdepth.next
+           
+            if (listdepth.data === value) {
+                return true                                  
+            } 
+
+            if (listdepth.next === null) {
+                return false
+            }
+        }
+
+    }
 
     // find(value) returns the index of the node containing value, or null if not found.
-    //Loop through each time adding another .next then check for value
-    find(list, value){}
+    find(list, value){
+
+        let i = 0
+        let listdepth = list
+   
+
+        while (listdepth.next !== null || i < 10000) {
+            i++;
+            listdepth = listdepth.next
+           
+            if (listdepth.data === value) {
+                return i                                  
+            } 
+        }
+
+    }
 
     // toString represents your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
-    //depending on if it is an entry in the list or the whole list either loop through converting the data contents of whole thing to text or just the single entry.
     toString(list) {
         let nodestring = 'The data contents of the linked list are as follows:'
         let i = 0
@@ -218,17 +277,10 @@ class LinkedList {
 
 //list creation testing and function testing
 let headnode = LinkedList.createHead()
-// let createnode1 = LinkedList.createListNode('test')
-// let createnode2 = LinkedList.createListNode('test2')
-// let createnode3 = LinkedList.createListNode('test3')
-// let createnode4 = LinkedList.createListNode('test4')
-// let createnode5 = LinkedList.createListNode('test5')
-// let createnode6 = LinkedList.createListNode('test6')
+
 
 
 headnode.append(headnode, '1 append test')
 headnode.append(headnode, '2 appened test')
 headnode.append(headnode, '3 append test')
 headnode.prepend(headnode, '1 prepend test')
-// head.append(head, createnode5)
-// head.append(head, createnode6)
