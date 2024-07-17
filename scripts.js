@@ -8,10 +8,11 @@
 
 
 //Once get the last two functions implemented go and make sure everything has a proper input checker.
+//Also dont forget to remove the testing calls at the bottom
 
 
 
-//Maybe add a few buttons or a number input for it to create as many nodes as selected.
+//Maybe add a few buttons or a number input for it to create as many nodes as selected. If want to get even more complex a full UI. Choose append, prepend, or index to insert that saves to an array until I submit it after which loop through the array running the appropriate function for each one.
 function listVisualizer(list) {
     let listelement = document.querySelector('#list')
     let listdepth = list
@@ -73,6 +74,7 @@ function listTraverser(list, value) {
 }
 
 
+
 //Depending on if it has a head or data value will either produce the head of the linked list or a node to add to one.
 class LinkedList {
     constructor (data) {
@@ -97,6 +99,12 @@ class LinkedList {
 // append(value) adds a new node containing value to the end of the list
 //Maybe add way to submit an array of list node entries for it to iterate through and add them all instead of calling the function multiple times
     append(list, value) {
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
+
         let createnode = LinkedList.createListNode(value)
         let tailnode = listTraverser(list)
             
@@ -106,7 +114,6 @@ class LinkedList {
                 tailnode.target.next = createnode
 
             } else {
-
 
                 if (tailnode.target.next === null) {
                     tailnode.target.next = createnode
@@ -132,11 +139,13 @@ class LinkedList {
             alert('Invalid object, please input a Linked List Head node.')
         }
    
-
     }
 
     // size returns the total number of nodes in the list
     size(list) {
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+        }
 
         list = listTraverser(list)
 
@@ -151,7 +160,10 @@ class LinkedList {
 
        // head returns the first node in the list
     headNode(list) {
-    
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+        }
+
         if (list.head === null)
             return list
         }   
@@ -159,6 +171,10 @@ class LinkedList {
     // tail returns the last node in the list
     tailNode(list) {
              
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+        }
+
         list = listTraverser(list)
         if (list.target.next === null) {
             return list.target                                   
@@ -167,18 +183,38 @@ class LinkedList {
 
     // at(index) returns the node at the given index
     at(list, index){
-        let listdepth = list
-        for (let i = 0; i < index; i++) {
-            listdepth = listdepth.next
-            
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
         }
 
-        return listdepth
+        if ( typeof(index) !== 'number' || typeof(index) === 'function') {
+            return alert('Please input a number for second parameter.')
+        }
 
+        let listdepth = list
+        for (let i = 0; i < index; i++) {
+            if (listdepth.next !== null) {
+                console.log(listdepth)
+                listdepth = listdepth.next  
+
+            } else {
+                break
+            }
+
+        }
+        return null 
     }
 
     // pop removes the last element from the list and returns it to a provided array.
     pop(list, newvar) {
+
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
 
         if (Array.isArray(newvar) === false) {
             return alert('Please provide an array for the second parameter')
@@ -211,6 +247,13 @@ class LinkedList {
 
     // contains(value) returns true if the passed in value is in the list and otherwise returns false.
     contains(list, value){
+
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
+
         list = listTraverser(list, value)
      
         if (list.target.data === value) {
@@ -225,6 +268,12 @@ class LinkedList {
 
     // find(value) returns the index of the node containing value, or null if not found.
     find(list, value){
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
+
         list = listTraverser(list, value)
 
         if (list.valuedepth) {
@@ -237,17 +286,24 @@ class LinkedList {
 
     // toString represents your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
     toString(list) {
+
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
+
         let nodestring = 'The data contents of the linked list are as follows:'
         let i = 0
         let listdepth = list.next
    
         while (listdepth !== null || i < 10000) {
             i++;
-            nodestring += ` ${listdepth.data},`
+            nodestring += ` ( ${listdepth.data} ) -> `
             listdepth = listdepth.next
            
             if (listdepth.next === null) {
-                nodestring += ` ${listdepth.data},`
+                nodestring += ` ( ${listdepth.data} ) -> null`
                 return nodestring                                   
             } 
         }
@@ -255,16 +311,78 @@ class LinkedList {
     }
 
     // insertAt(value, index) that inserts a new node with the provided value at the given index.
-    //Add however many .next it takes to reach the index value then change the target's next to null.
     insertAt(list, value, index){
-        appendWith.next = appendTo.next
-        appendTo.next = appendWith
 
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
+
+        if ( typeof(index) !== 'number' || typeof(index) === 'function') {
+            return alert('Please input a number for second parameter.')
+        }
+
+        let createnode = LinkedList.createListNode(value)
+        let i = 0
+        let listdepth = list
+
+        for (let i = 0; i < index; i++) {
+            if (listdepth.next !== null) {
+                listdepth = listdepth.next  
+            } else {
+                listdepth.next = null
+                break
+            }
+        }
+
+       if (listdepth.next === null) {
+        createnode.next === null
+       } else {
+        createnode.next = listdepth.next
+
+       }
+       
+        createnode.next = listdepth.next
+        listdepth.next = createnode
+        listVisualizer(list)     
+   
     }
 
     // removeAt(index) that removes the node at the given index.
-    //Same as for insert
-    removeAt(list, index) {}
+    removeAt(list, index) {
+        if (typeof(list) !== 'object' || list.head !== null ) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
+
+        if ( typeof(index) !== 'number' || typeof(index) === 'function') {
+            return alert('Please input a number for second parameter.')
+        }
+
+        let i = 0
+        let listdepth = list
+
+        for (let i = 0; i < index - 1; i++) {
+            if (listdepth.next.next === null) {
+                break
+            } else {
+            listdepth = listdepth.next; 
+            }
+         
+        }
+
+            
+            listdepth.next = listdepth.next.next
+            listVisualizer(list)
+            return 
+
+
+        
+
+
+    }
 
 }
 
