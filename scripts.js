@@ -5,15 +5,13 @@
 // Build the following functions in your linked list class / factory:
 
 
-
-
-//Once get the last two functions implemented go and make sure everything has a proper input checker.
-//Also dont forget to remove the testing calls at the bottom
-
-
-
-//Maybe add a few buttons or a number input for it to create as many nodes as selected. If want to get even more complex a full UI. Choose append, prepend, or index to insert that saves to an array until I submit it after which loop through the array running the appropriate function for each one.
 function listVisualizer(list) {
+    if (typeof(list) !== 'object' || list.head !== null ) {
+        alert("Please provide a LinkedList object")
+
+        return
+    }
+
     let listelement = document.querySelector('#list')
     let listdepth = list
     let i = 0
@@ -21,7 +19,7 @@ function listVisualizer(list) {
         while (listelement.firstChild && i < 100) {
                 i++
                 listelement.removeChild(listelement.lastChild)           
-            }
+            }                  
 
     while (listdepth.next !== null) {
         
@@ -51,11 +49,15 @@ function listVisualizer(list) {
 }
 
 function listTraverser(list, value) {
+    if (typeof(list) !== 'object' || list.head !== null ) {
+        alert("Please provide a LinkedList object")
+
+        return
+    }
+
     let targetnode = list
-    let result = {}
     let i = 0
     while (targetnode.next !== null || i < 10000) {
-
         if (targetnode.head === null && targetnode.next === null) {
             return result = {'target': targetnode, 'depth': i}
         }
@@ -69,11 +71,10 @@ function listTraverser(list, value) {
         }
         i++;
         targetnode = targetnode.next; 
-  
+
+
     }
 }
-
-
 
 //Depending on if it has a head or data value will either produce the head of the linked list or a node to add to one.
 class LinkedList {
@@ -196,7 +197,6 @@ class LinkedList {
         let listdepth = list
         for (let i = 0; i < index; i++) {
             if (listdepth.next !== null) {
-                console.log(listdepth)
                 listdepth = listdepth.next  
 
             } else {
@@ -208,41 +208,33 @@ class LinkedList {
     }
 
     // pop removes the last element from the list and returns it to a provided array.
-    pop(list, newvar) {
-
+    pop(list, ) {
         if (typeof(list) !== 'object' || list.head !== null ) {
             alert("Please provide a LinkedList object")
 
             return
         }
 
-        if (Array.isArray(newvar) === false) {
-            return alert('Please provide an array for the second parameter')
-        }
-
         let i = 0
         let listdepth = list
           
-        while (listdepth.next.next !== null || i < 10000) {
+        while (listdepth.next.next !== null || i < 10000 || listdepth.head !== null) {              
+              
+                if (listdepth.next.next === null && !listdepth.head) {
+                    break
+                }
+                 i++;
+                listdepth = listdepth.next; 
+                }
 
-            if (listdepth.next.next === null) {
-                break
-            } else {
-            i++;
-            listdepth = listdepth.next; 
-            }
-         
-        }
+        if (listdepth.next.next === null ) {
 
-        if (listdepth.next.next === null) {
-            
-            newvar.push(listdepth.next)
+           let tobepopped =  listdepth.next
             listdepth.next = null
             listVisualizer(list)
-            return 
+            return  tobepopped
             
         }
-
     }
 
     // contains(value) returns true if the passed in value is in the list and otherwise returns false.
@@ -372,28 +364,68 @@ class LinkedList {
             }
          
         }
-
             
             listdepth.next = listdepth.next.next
             listVisualizer(list)
-            return 
+            return      
+
+    }
+
+    //Reverses the input linkedlist.
+    reverse(source) {
+
+        if (typeof(source) !== 'object' || source.head !== null) {
+            alert("Please provide a LinkedList object")
+
+            return
+        }
+
+        if (source === null) return;
+        let reversed = source
+
+        let currentNode = reversed;
+
+        let prevNode = null;
+        let nextNode = null;
+        let i = 0
 
 
-        
+        while (currentNode && i < 100) {
 
+            i++
+   
+            nextNode = currentNode.next;
+            currentNode.next = prevNode;
+            prevNode = currentNode;
+            currentNode = nextNode;
+            nextNode = null;
+      
+        }
+     
+        reversed = source
+        reversed.next = prevNode
+        i = 0
 
+        let finalNode = reversed;
+        while (finalNode.next.head !== null && i < 100) {
+            i++
+            finalNode = finalNode.next;
+     
+        }
+        finalNode.next = null;
+
+        listVisualizer(reversed)
+        return reversed;
     }
 
 }
 
-
-
 //list creation testing and function testing
 let headnode = LinkedList.createHead()
-
-
 
 headnode.append(headnode, '1 append test')
 headnode.append(headnode, '2 append test')
 headnode.append(headnode, '3 append test')
 headnode.prepend(headnode, '1 prepend test')
+
+// let reversed = headnode.reverse(headnode)
