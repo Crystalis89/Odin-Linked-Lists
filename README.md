@@ -2,7 +2,13 @@
  Linked Lists assignment for The Odin Project.
  https://www.theodinproject.com/lessons/javascript-linked-lists
 
- It contains the functions for:
+The class can either construct a head or a node via:
+- LinkedList.createHead()
+- LinkedList.createListNode(data)
+
+Examples of creating a list are on the bottom of the code page.
+
+The class, and thus objects created by it, contain the functions for:
 
 - append(list,value) adds a new node containing value to the end of the list
 - prepend(list, value) adds a new node containing value to the start of the list
